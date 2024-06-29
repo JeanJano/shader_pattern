@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import circleVertexShader from './shaders/circle/vertex.glsl'
 import circleFragmentShader from './shaders/circle/fragment.glsl'
+import crossVertexShader from './shaders/cross/vertex.glsl'
+import crossFragmentShader from './shaders/cross/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -12,15 +14,28 @@ const scene = new THREE.Scene()
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
 
-// Material
-const material = new THREE.ShaderMaterial({
+// circleMaterial
+const circleMaterial = new THREE.ShaderMaterial({
     vertexShader: circleVertexShader,
     fragmentShader: circleFragmentShader,
 })
 
+// crossMaterial
+const crossMaterial = new THREE.ShaderMaterial({
+    vertexShader: crossVertexShader,
+    fragmentShader: crossFragmentShader,
+})
+
 // Mesh
-const circle = new THREE.Mesh(geometry, material)
+const circle = new THREE.Mesh(geometry, circleMaterial)
+const cross = new THREE.Mesh(geometry, crossMaterial)
 scene.add(circle)
+scene.add(cross)
+
+// Position
+circle.position.set(-1, 0, 0)
+cross.position.set(1, 0, 0)
+
 
 /**
  * Sizes
@@ -49,7 +64,7 @@ window.addEventListener('resize', () =>
  * Camera
  */
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(0.25, - 0.25, 1)
+camera.position.set(0, 0, 5)
 scene.add(camera)
 
 const controls = new OrbitControls(camera, canvas)
