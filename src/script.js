@@ -6,6 +6,8 @@ import crossVertexShader from './shaders/cross/vertex.glsl'
 import crossFragmentShader from './shaders/cross/fragment.glsl'
 import squateVertexShader from './shaders/square_outline/vertex.glsl'
 import squareFragmentShader from './shaders/square_outline/fragment.glsl'
+import noiseVertexShader from './shaders/noise/vertex.glsl'
+import noiseFragmentShader from './shaders/noise/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -28,23 +30,33 @@ const crossMaterial = new THREE.ShaderMaterial({
     fragmentShader: crossFragmentShader,
 })
 
+// squareMaterial
 const squareMaterial = new THREE.ShaderMaterial({
     vertexShader: squateVertexShader,
     fragmentShader: squareFragmentShader
+})
+
+// noiseMaterial
+const noiseMaterial = new THREE.ShaderMaterial({
+    vertexShader: noiseVertexShader,
+    fragmentShader: noiseFragmentShader
 })
 
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
 const square = new THREE.Mesh(geometry, squareMaterial)
+const noise = new THREE.Mesh(geometry, noiseMaterial)
 scene.add(circle)
 scene.add(cross)
 scene.add(square)
+scene.add(noise)
 
 // Position
 circle.position.set(-1, 1, 0)
-cross.position.set(1, 0, 0)
+cross.position.set(1, 1, 0)
 square.position.set(-1, -1, 0)
+noise.position.set(-3, -1, 0)
 
 
 /**
