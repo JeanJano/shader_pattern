@@ -12,6 +12,8 @@ import lightVertexShader from './shaders/light/vertex.glsl'
 import lightFragmentShader from './shaders/light/fragment.glsl'
 import starVertexShader from './shaders/star/vertex.glsl'
 import starFragmentShader from './shaders/star/fragment.glsl'
+import waveDistortionVertexShader from './shaders/wave_distortion/vertex.glsl'
+import waveDistortionFragmentShader from './shaders/wave_distortion/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -58,6 +60,12 @@ const starMaterial = new THREE.ShaderMaterial({
     fragmentShader: starFragmentShader
 })
 
+// waveDistortionMaterial
+const waveDistortionMaterial = new THREE.ShaderMaterial({
+    vertexShader: waveDistortionVertexShader,
+    fragmentShader: waveDistortionFragmentShader
+})
+
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
@@ -65,12 +73,14 @@ const square = new THREE.Mesh(geometry, squareMaterial)
 const noise = new THREE.Mesh(geometry, noiseMaterial)
 const light = new THREE.Mesh(geometry, lightMaterial)
 const star = new THREE.Mesh(geometry, starMaterial)
+const waveDistortion = new THREE.Mesh(geometry, waveDistortionMaterial)
 scene.add(circle)
 scene.add(cross)
 scene.add(square)
 scene.add(noise)
 scene.add(light)
 scene.add(star)
+scene.add(waveDistortion)
 
 // Position
 circle.position.set(-1, 1, 0)
@@ -79,6 +89,7 @@ square.position.set(-1, -1, 0)
 noise.position.set(-3, -1, 0)
 light.position.set(3, -1, 0)
 star.position.set(3, 1, 0)
+waveDistortion.position.set(-3, 1, 0)
 
 /**
  * Sizes
