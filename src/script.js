@@ -4,6 +4,8 @@ import circleVertexShader from './shaders/circle/vertex.glsl'
 import circleFragmentShader from './shaders/circle/fragment.glsl'
 import crossVertexShader from './shaders/cross/vertex.glsl'
 import crossFragmentShader from './shaders/cross/fragment.glsl'
+import squateVertexShader from './shaders/square_outline/vertex.glsl'
+import squareFragmentShader from './shaders/square_outline/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -26,15 +28,23 @@ const crossMaterial = new THREE.ShaderMaterial({
     fragmentShader: crossFragmentShader,
 })
 
+const squareMaterial = new THREE.ShaderMaterial({
+    vertexShader: squateVertexShader,
+    fragmentShader: squareFragmentShader
+})
+
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
+const square = new THREE.Mesh(geometry, squareMaterial)
 scene.add(circle)
 scene.add(cross)
+scene.add(square)
 
 // Position
-circle.position.set(-1, 0, 0)
+circle.position.set(-1, 1, 0)
 cross.position.set(1, 0, 0)
+square.position.set(-1, -1, 0)
 
 
 /**
