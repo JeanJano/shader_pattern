@@ -10,6 +10,8 @@ import noiseVertexShader from './shaders/noise/vertex.glsl'
 import noiseFragmentShader from './shaders/noise/fragment.glsl'
 import lightVertexShader from './shaders/light/vertex.glsl'
 import lightFragmentShader from './shaders/light/fragment.glsl'
+import starVertexShader from './shaders/star/vertex.glsl'
+import starFragmentShader from './shaders/star/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -50,17 +52,25 @@ const lightMaterial = new THREE.ShaderMaterial({
     fragmentShader: lightFragmentShader
 })
 
+// starMaterial
+const starMaterial = new THREE.ShaderMaterial({
+    vertexShader: starVertexShader,
+    fragmentShader: starFragmentShader
+})
+
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
 const square = new THREE.Mesh(geometry, squareMaterial)
 const noise = new THREE.Mesh(geometry, noiseMaterial)
 const light = new THREE.Mesh(geometry, lightMaterial)
+const star = new THREE.Mesh(geometry, starMaterial)
 scene.add(circle)
 scene.add(cross)
 scene.add(square)
 scene.add(noise)
 scene.add(light)
+scene.add(star)
 
 // Position
 circle.position.set(-1, 1, 0)
@@ -68,6 +78,7 @@ cross.position.set(1, 1, 0)
 square.position.set(-1, -1, 0)
 noise.position.set(-3, -1, 0)
 light.position.set(3, -1, 0)
+star.position.set(3, 1, 0)
 
 /**
  * Sizes
