@@ -16,7 +16,8 @@ import waveDistortionVertexShader from './shaders/wave_distortion/vertex.glsl'
 import waveDistortionFragmentShader from './shaders/wave_distortion/fragment.glsl'
 import psychedelicVertexShader from './shaders/psychedelic/vertex.glsl'
 import psychedelicFragmentShader from './shaders/psychedelic/fragment.glsl'
-
+import noisePerlinVertexShader from './shaders/noise_perlin/vertex.glsl'
+import noisePerlinFragmentShader from './shaders/noise_perlin/fragment.glsl'
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -75,6 +76,12 @@ const psychedelicMaterial = new THREE.ShaderMaterial({
     fragmentShader: psychedelicFragmentShader
 })
 
+// noisePerlinMaterial
+const noisePerlinMaterial = new THREE.ShaderMaterial({
+    vertexShader: noisePerlinVertexShader,
+    fragmentShader: noisePerlinFragmentShader
+})
+
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
@@ -84,6 +91,7 @@ const light = new THREE.Mesh(geometry, lightMaterial)
 const star = new THREE.Mesh(geometry, starMaterial)
 const waveDistortion = new THREE.Mesh(geometry, waveDistortionMaterial)
 const psychedelic = new THREE.Mesh(geometry, psychedelicMaterial)
+const noisePerlin = new THREE.Mesh(geometry, noisePerlinMaterial)
 scene.add(circle)
 scene.add(cross)
 scene.add(square)
@@ -92,6 +100,7 @@ scene.add(light)
 scene.add(star)
 scene.add(waveDistortion)
 scene.add(psychedelic)
+scene.add(noisePerlin)
 
 // Position
 circle.position.set(-1, 1, 0)
@@ -102,6 +111,7 @@ light.position.set(3, -1, 0)
 star.position.set(3, 1, 0)
 waveDistortion.position.set(-3, 1, 0)
 psychedelic.position.set(-3, 3, 0)
+noisePerlin.position.set(-3, -3, 0)
 /**
  * Sizes
  */
