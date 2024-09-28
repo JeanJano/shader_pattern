@@ -1,23 +1,27 @@
 import * as THREE from 'three'
+import { AmbientLight } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import circleVertexShader from './shaders/circle/vertex.glsl'
 import circleFragmentShader from './shaders/circle/fragment.glsl'
-import crossVertexShader from './shaders/cross/vertex.glsl'
+import circleVertexShader from './shaders/circle/vertex.glsl'
 import crossFragmentShader from './shaders/cross/fragment.glsl'
-import squateVertexShader from './shaders/square_outline/vertex.glsl'
-import squareFragmentShader from './shaders/square_outline/fragment.glsl'
-import noiseVertexShader from './shaders/noise/vertex.glsl'
-import noiseFragmentShader from './shaders/noise/fragment.glsl'
-import lightVertexShader from './shaders/light/vertex.glsl'
+import crossVertexShader from './shaders/cross/vertex.glsl'
+import fakeEdgeDetectionFragmentShader from './shaders/fake_edge_detection/fragment.glsl'
+import fakeEdgeDetectionVertexShader from './shaders/fake_edge_detection/vertex.glsl'
 import lightFragmentShader from './shaders/light/fragment.glsl'
-import starVertexShader from './shaders/star/vertex.glsl'
-import starFragmentShader from './shaders/star/fragment.glsl'
-import waveDistortionVertexShader from './shaders/wave_distortion/vertex.glsl'
-import waveDistortionFragmentShader from './shaders/wave_distortion/fragment.glsl'
-import psychedelicVertexShader from './shaders/psychedelic/vertex.glsl'
-import psychedelicFragmentShader from './shaders/psychedelic/fragment.glsl'
-import noisePerlinVertexShader from './shaders/noise_perlin/vertex.glsl'
+import lightVertexShader from './shaders/light/vertex.glsl'
+import noiseFragmentShader from './shaders/noise/fragment.glsl'
+import noiseVertexShader from './shaders/noise/vertex.glsl'
 import noisePerlinFragmentShader from './shaders/noise_perlin/fragment.glsl'
+import noisePerlinVertexShader from './shaders/noise_perlin/vertex.glsl'
+import psychedelicFragmentShader from './shaders/psychedelic/fragment.glsl'
+import psychedelicVertexShader from './shaders/psychedelic/vertex.glsl'
+import squareFragmentShader from './shaders/square_outline/fragment.glsl'
+import squateVertexShader from './shaders/square_outline/vertex.glsl'
+import starFragmentShader from './shaders/star/fragment.glsl'
+import starVertexShader from './shaders/star/vertex.glsl'
+import waveDistortionFragmentShader from './shaders/wave_distortion/fragment.glsl'
+import waveDistortionVertexShader from './shaders/wave_distortion/vertex.glsl'
+
 
 const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
@@ -27,6 +31,7 @@ const scene = new THREE.Scene()
  */
 // Geometry
 const geometry = new THREE.PlaneGeometry(1, 1, 32, 32)
+const boxGeometry = new THREE.BoxGeometry(1, 1, 0.25);
 
 // circleMaterial
 const circleMaterial = new THREE.ShaderMaterial({
@@ -82,6 +87,12 @@ const noisePerlinMaterial = new THREE.ShaderMaterial({
     fragmentShader: noisePerlinFragmentShader
 })
 
+// fakeEdgeDetection
+const fakeEdgeDetectionMaterial = new THREE.ShaderMaterial({
+    vertexShader: fakeEdgeDetectionVertexShader,
+    fragmentShader: fakeEdgeDetectionFragmentShader,
+})
+
 // Mesh
 const circle = new THREE.Mesh(geometry, circleMaterial)
 const cross = new THREE.Mesh(geometry, crossMaterial)
@@ -92,6 +103,7 @@ const star = new THREE.Mesh(geometry, starMaterial)
 const waveDistortion = new THREE.Mesh(geometry, waveDistortionMaterial)
 const psychedelic = new THREE.Mesh(geometry, psychedelicMaterial)
 const noisePerlin = new THREE.Mesh(geometry, noisePerlinMaterial)
+const fakeEdgeDetection = new THREE.Mesh(boxGeometry, fakeEdgeDetectionMaterial)
 scene.add(circle)
 scene.add(cross)
 scene.add(square)
@@ -101,6 +113,7 @@ scene.add(star)
 scene.add(waveDistortion)
 scene.add(psychedelic)
 scene.add(noisePerlin)
+scene.add(fakeEdgeDetection)
 
 // Position
 circle.position.set(-1, 1, 0)
@@ -112,6 +125,9 @@ star.position.set(3, 1, 0)
 waveDistortion.position.set(-3, 1, 0)
 psychedelic.position.set(-3, 3, 0)
 noisePerlin.position.set(-3, -3, 0)
+fakeEdgeDetection.position.set(-1, -3, 0)
+
+
 /**
  * Sizes
  */
@@ -119,6 +135,13 @@ const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
+
+/**
+ * light
+ */
+
+const ambiantLight = new AmbientLight(0xffffff, 1)
+scene.add(ambiantLight)
 
 window.addEventListener('resize', () =>
 {
